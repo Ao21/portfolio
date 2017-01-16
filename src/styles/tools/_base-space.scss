@@ -1,0 +1,38 @@
+//
+// #REM CALC
+//
+
+@function rem($target, $rem-context: $base-size) {
+  @if not unitless($target) {
+    $target: strip-unit($target);
+  }
+
+  @if not unitless($rem-context) {
+    $rem-context: strip-unit($rem-context);
+  }
+
+  @return $target / $rem-context * 1rem;
+}
+
+@function get-line-height($size) {
+  @return map-get($line-heights, $size);
+}
+
+
+
+//
+// #BASE SPACING
+//
+@function base($size: regular, $rem: rem) {
+  $bs: ();
+
+  @if type-of($size) == number {
+    $bs: rem($base-line-height * $size)
+  }
+  @else if $rem == "rem" {
+    $bs: rem(map-get($base-spacing, $size));
+  } @else {
+    $bs: map-get($base-spacing, $size);
+  }
+  @return $bs;
+}

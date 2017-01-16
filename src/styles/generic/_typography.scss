@@ -1,0 +1,43 @@
+//-------------------------------------
+// #ELEMENTS-TYPOGRAPHY
+//-------------------------------------
+
+body {
+  @include font-family(sans);
+  @include font-weight(medium);
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include font-family(primary);
+  @include font-weight(bold);
+  @include smooth-fonts();
+  color: $color-black;
+}
+
+
+h1 { @include font-size(giant); }
+h2 { @include font-size(big); }
+h3 { @include font-size(huge); }
+h4 { @include font-size(large); }
+h5 { @include font-size(medium); }
+h6 { @include font-size(regular); }
+
+p {
+  @include font-size(regular);
+  margin: base(medium) 0;
+  color: $color-black;
+  line-height: $base-line-height * 1.25;
+  &:first-of-type { margin-top: 0; }
+  &:last-of-type { margin-bottom: 0; }
+}
+
+a {
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}

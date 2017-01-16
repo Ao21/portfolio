@@ -17,3 +17,9 @@ import 'core-js/es6/reflect';
 
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
+
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/scan');
+require('rxjs/add/operator/mergemap');
+require('rxjs/add/operator/share');
+require('rxjs/add/operator/combinelatest');

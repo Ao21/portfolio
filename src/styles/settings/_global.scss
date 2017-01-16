@@ -1,0 +1,37 @@
+//-------------------------------------
+// #SETTINGS-GLOBAL
+//-------------------------------------
+
+$base-size        : 1rem !default;
+$base-line-height : $base-size * 1.25 !default;
+
+$base-spacing: (
+  "mini"    : $base-line-height / 4,
+  "tiny"    : $base-line-height / 3,
+  "small"   : $base-line-height / 2,
+  "medium"  : $base-line-height,
+  "large"   : $base-line-height * 2,
+  "huge"    : $base-line-height * 3,
+  "big"     : $base-line-height * 4
+) !default;
+
+$base-shadow : 0 1px 1px rgba(black, 0.5);
+$base-transition  : all 0.3s ease 0s !global;
+
+$base-images-path : "assets/img" !global;
+
+$timeline-width: 48px;
+$header-height: 7rem;
+
+@import "/../../../node_modules/bourbon/core/_bourbon.scss";
+
+$bourbon: (
+  "contrast-switch-dark-color": #000,
+  "contrast-switch-light-color": #fff,
+  "global-font-file-formats": ("ttf", "woff2", "woff"),
+  "modular-scale-base": 1em,
+  "modular-scale-ratio": $major-third,
+  "rails-asset-pipeline": false,
+);
+
+@import "../../../node_modules/bourbon-neat/core/_neat.scss"

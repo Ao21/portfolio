@@ -1,0 +1,45 @@
+//-------------------------------------
+// #SETTINGS-TYPOGRAPHY
+//-------------------------------------
+
+$font-family : (
+  "sans"    : ("Proxima Nova", Helvetica, "Helvetica Neue", Arial, sans-serif),
+  "serif"   : (Georgia, "Times New Roman", Times, serif),
+  "mono"    : (Inconsolata, "Courier New", Courier, monospace),
+  "primary" : ("freight-sans-pro","Open Sans", sans-serif),
+  "heading" : ("freight-sans-pro","Open Sans", sans-serif)
+) !default;
+
+$font-size : (
+  "mini"    : modular-scale(-3),
+  "tiny"    : modular-scale(-2),
+  "small"   : modular-scale(-1),
+  "regular" : modular-scale(0),
+  "medium"  : modular-scale(1),
+  "large"   : modular-scale(2),
+  "huge"    : modular-scale(3),
+  "big"     : modular-scale(4),
+  "giant"   : modular-scale(5),
+  "ogro"    : modular-scale(6),
+  "monster" : modular-scale(7),
+  "god"     : modular-scale(13),
+) !default;
+
+$line-heights : (
+  "mini"    : $base-line-height,
+  "tiny"    : $base-line-height,
+  "small"   : $base-line-height * 1.25,
+  "medium"  : $base-line-height * 1.25,
+  "large"   : $base-line-height * 1.5,
+  "huge"    : $base-line-height * 1.75,
+  "big"     : $base-line-height * 2,
+  "giant"   : $base-line-height * 2.5,
+) !default;
+
+$font-weight : (
+  "thin"   : 100,
+  "light"  : 300,
+  "medium" : 400,
+  "bold"   : 600,
+  "bolder" : 800
+) !default;

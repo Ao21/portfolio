@@ -1,0 +1,13 @@
+@import "./../../../styles/settings/settings";
+:host,
+app-about-page {
+    @include grid-column(12, $default-desktop-grid);
+    @include grid-media($default-mobile-grid) {
+        @include grid-column(4);
+        padding: base(medium) 0 0;
+    }
+    padding: base(huge) 0 0;
+    p {
+        margin: base(medium) 0;
+    }
+}

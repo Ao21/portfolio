@@ -1,0 +1,59 @@
+@import "./../../../styles/settings/settings";
+
+:host,
+app-introduction {
+    float: left;
+    width: 100vw;
+    background-color: $color-red;
+     
+    section {
+        @include grid-column(12, $default-desktop-grid);
+        min-height: 60vh;
+        display: flex;
+        align-items: flex-end;
+
+        @include grid-media($default-mobile-grid){
+            @include grid-column(4);
+            flex-direction: column;
+            align-items: flex-start;
+            min-height: 100%;
+        }
+
+    }
+
+    article {
+        flex: 1 1 auto;
+        padding-left: base(medium);
+        @include grid-media($default-mobile-grid){
+            padding-left: 0;
+        }
+
+    }
+
+    img {
+        flex: 0 0 auto;
+        @include grid-media($default-mobile-grid){
+            max-height: 107px;
+            margin: base(medium) 0;
+        }
+    }
+
+    h1 {
+        @include grid-media($default-mobile-grid){
+            @include font-size(medium);
+            @include font-weight(thin);
+            @include smooth-fonts;
+        }
+        &:last-child{
+            margin-bottom: base(small);
+        }
+        span {
+            color: white;
+        }
+    }
+
+    .title {
+        @include font-size(god);
+    }
+
+}

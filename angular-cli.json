@@ -18,11 +18,12 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "styles.scss"
       ],
       "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
+        "hmr": "environments/environment.hmr.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
@@ -41,7 +42,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "prefixInterfaces": false,
     "inline": {
       "style": false,

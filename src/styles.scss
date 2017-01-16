@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "styles/settings/global";
+@import "styles/settings/colors";
+@import "styles/settings/responsive";
+@import "styles/settings/typography";
+
+@import "styles/tools/typography";
+@import "styles/tools/base-space";
+
+@import "styles/generic/normalize";
+@import "styles/generic/box-sizing";
+@import "styles/generic/reset";
+@import "styles/generic/layout";
+@import "styles/generic/typography";
+
