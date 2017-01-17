@@ -6,16 +6,18 @@ import { scaleSqrt } from 'd3-scale';
 import { max, sum } from 'd3-array';
 import { map } from 'd3-collection';
 import { transition, Transition } from 'd3-transition';
-
+import { Vector, getClockwiseOrCounter, sampleVectors, distanceBetweenVectors} from './../../../core/util/vectors';
 
 import * as _ from 'lodash';
 
 const nodes = [
-  { id: '2017', size: 1 },
-  { id: '2016', size: 2 },
-  { id: '2015', size: 5 },
-  { id: '2014', size: 6 },
-  { id: '2013', size: 10 },
+  { id: '2017', size: 10 },
+  { id: '2016', size: 8 },
+  { id: '2015', size: 6 },
+  { id: '2014', size: 4 },
+  { id: '2013', size: 2 },
+  { id: '2012', size: 1 }
+
 ]
 
 
@@ -35,7 +37,7 @@ export class NavMenuComponent implements OnInit {
   padding: number = 15;
   maxRadius: number = 25;
 
-  radiusScale = scaleSqrt().domain([0, max(nodes, (e: any) => e.size)]).range([1, this.maxRadius])
+  radiusScale = scaleSqrt().domain([0, max(nodes, (e: any) => e.size)]).range([0, this.maxRadius])
   radiusScaleInv = scaleSqrt().domain([0, max(nodes, (e: any) => e.size)]).range([0, this.maxRadius]).invert;
   roughCircumference = sum(_.map(nodes, (e) => this.radiusScale(e.size))) * 2 + this.padding * (nodes.length - 1);
   radius = this.roughCircumference / (Math.PI * 2);
@@ -47,6 +49,12 @@ export class NavMenuComponent implements OnInit {
   nodeList;
 
   transition = transition('transform');
+
+  centerVector: Vector;  
+  initialPoint: Vector;
+  vectorMap: Vector[] = [];
+
+  distanceTravelled: number = 0;
 
 
   tree = tree()
@@ -74,11 +82,11 @@ export class NavMenuComponent implements OnInit {
   }
 
   createSvg() {
-    this.container = select('.background').append('svg')
-      .attr('width', this.width + this.m * 2)
-      .attr('height', this.width + this.m * 2)
+    this.container = select('svg')
+      .attr('width', 250)
+      .attr('height', 250)
       .append('g')
-      .attr('transform', 'translate(' + (this.width / 2 + this.m) + ',' + (this.width / 3 + this.m) + ')');
+      .attr('transform', 'translate(' + (250 / 2) + ',' + (250 / 2) + ')');
 
 
     let map = hierarchy(this.dataTree, (d) => d.children);
@@ -89,7 +97,7 @@ export class NavMenuComponent implements OnInit {
       .enter()
       .append('g')
       .attr('class', 'node')
-      .attr('id', function (d) { return 'node-' + d.data['id']})
+      .attr('id', function (d) { return 'node-' + d.data['id'] })
       .attr('transform', function (d) {
         return 'rotate(' + -(d.x + 200) / 2 + ') translate(' + d.y * 2 + ')';
       }).on('click', this.updateNodes);
@@ -102,7 +110,7 @@ export class NavMenuComponent implements OnInit {
     return _.map(array, (arrItem: any, i) => {
       let distance = (selectedInd - i);
       distance = distance > 0 ? distance : -distance;
-      arrItem.size = _.clamp(10 - (distance * 3), 0.5, 10);
+      arrItem.size = _.clamp(10 - (distance * 2), 0, 10);
       return arrItem;
     });
   }
@@ -113,15 +121,64 @@ export class NavMenuComponent implements OnInit {
     let map = hierarchy({ children: nArray }, (d) => d.children);
     let nodes = this.tree(map);
 
+    // select('.background svg')
+    //   .transition()
+    //   .style('transform', `rotate(-${(nArray.length - selectedIndex - 1) * 32}deg)`);
 
-      selectAll('.node')
+    selectAll('.node')
       .data(nodes.children)
       .transition()
       .attr('transform', function (d) {
         return 'rotate(' + -(d.x + 200) / 2 + ') translate(' + d.y * 2 + ')';
       })
-    .select('circle').attr('r', (d: any) => { return this.radiusScale(d.data.size); });
+      .select('circle').attr('r', (d: any) => { return this.radiusScale(d.data.size); });
   }
+
+  onPanStart = ($event: HammerInput) => {
+    
+    let boundingRect = this.el.nativeElement.getBoundingClientRect();
+    let top = boundingRect.top;
+    let height = boundingRect.height;
+    let right = boundingRect.right;
+    let centerX = (right / 2);
+    let centerY = (top + height) / 2;
+
+    this.centerVector = new Vector(centerX, centerY);
+
+    // let center = new Vector()
+    this.vectorMap[0] = new Vector($event.center.x, $event.center.y);
+
+  }
+  onPanEnd($event) {
+
+  }
+
+
+  rotateNode() {
+    
+  }
+  onPan = ($event: HammerInput) => {
+    if (!this.initialPoint) {
+      this.initialPoint = new Vector($event.center.x, $event.center.y)
+    }
+    if (this.vectorMap.length < 6) {
+      return this.vectorMap[this.vectorMap.length] = new Vector($event.center.x, $event.center.y);
+    }
+    let average = sampleVectors(this.centerVector, this.vectorMap);
+    let svg: HTMLElement = this.el.nativeElement.querySelector('svg');
+    let dist = distanceBetweenVectors(this.initialPoint, new Vector($event.center.x, $event.center.y));
+    if (average) {
+      this.distanceTravelled = this.distanceTravelled + dist;
+    } else {
+        this.distanceTravelled = this.distanceTravelled - dist;
+    }
+    svg.style.transform = `rotate(${this.distanceTravelled}deg)`;
+    this.vectorMap = [];
+    this.initialPoint = null;
+  }
+
+
+
 
 
 

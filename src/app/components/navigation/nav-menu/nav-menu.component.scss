@@ -2,8 +2,18 @@
 app-nav-menu {
     float: left;
     width: 100vw;
-    .background, svg {
+    .background {
+        display: flex;
         width: 100%;
+        float: left;
+        height: 260px;
+        justify-content: center;
+    }
+
+    svg {
+        flex: 0 0 auto;
+        width: 260px;
+        float: left;
         height: 260px;
     }
 
